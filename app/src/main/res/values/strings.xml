@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Cadastro de Frutas</string>
+    <string name="title_activity_add">Adicionar</string>
+    <string name="title_activity_detail">Detalhes</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="label_name">Nome</string>
+    <string name="label_benefits">Beneficios</string>
+    <string name="button_add_image">Adicionar imagem</string>
+    <string name="button_add_fruit">Adicionar</string>
+    <string name="button_delete">Excluir</string>
+    <string name="load_image_error">Não foi possível carregar a imagem</string>
+    <string name="error_required_name">O campo nome é obrigatório</string>
+    <string name="error_required_benefits">O campo de benefícios é obrigatório</string>
+    <string name="error_required_photo">Por favor selecione uma imagem</string>
+    <string name="error_no_fruit">Não foi possível carregar o detalhe</string>
+
+    <string name="message_add">Fruta adicionada com sucesso</string>
+    <string name="message_delete">Fruta removida com sucesso</string>
+</resources>
