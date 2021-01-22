@@ -18,6 +18,7 @@ import java.io.InputStream
 class AddActivity : AppCompatActivity() {
     companion object {
         const val GET_IMAGE_REQUEST_CODE = 2
+        const val SAVE_BITMAP = "bitmap"
     }
 
     private lateinit var binding: ActivityAddBinding
@@ -77,6 +78,24 @@ class AddActivity : AppCompatActivity() {
             } catch (e: FileNotFoundException) {
                 Toast.makeText(this, R.string.load_image_error, Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putParcelable(SAVE_BITMAP, imageData)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val bitmap = savedInstanceState.getParcelable<Bitmap>(SAVE_BITMAP)
+
+        if (bitmap != null) {
+            imageData = bitmap
+
+            binding.imageView2.setImageBitmap(imageData)
         }
     }
 

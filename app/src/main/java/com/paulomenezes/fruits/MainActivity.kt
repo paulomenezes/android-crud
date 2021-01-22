@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulomenezes.fruits.adapters.FruitsAdapter
 import com.paulomenezes.fruits.databinding.ActivityMainBinding
 import com.paulomenezes.fruits.models.Fruit
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var fruitList = mutableListOf<Fruit>()
+
     private val fruitsAdapter = FruitsAdapter(this, fruitList) { index ->
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(ADD_FRUIT_EXTRA_NAME, fruitList[index])
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         startActivityForResult(intent, DETAIL_FRUIT_REQUEST_CODE)
     }
+
+    private var layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +40,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.recyclerView.adapter = fruitsAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager = layoutManager
 
-        if (savedInstanceState != null) {
-            val list = savedInstanceState.getParcelableArrayList<Fruit>(SAVED_INSTANCE_EXTRA_ID)
-
-            if (list != null) {
-                fruitList = list
-                fruitsAdapter.notifyDataSetChanged()
-            }
-        }
+//        if (savedInstanceState != null) {
+//            val list = savedInstanceState.getParcelableArrayList<Fruit>(SAVED_INSTANCE_EXTRA_ID)
+//
+//            if (list != null) {
+//                fruitList = list
+//                fruitsAdapter.notifyDataSetChanged()
+//            }
+//        }
 
         binding.addButton.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
@@ -86,5 +90,18 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(SAVED_INSTANCE_EXTRA_ID, ArrayList(fruitList))
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val list = savedInstanceState.getParcelableArrayList<Fruit>(SAVED_INSTANCE_EXTRA_ID)
+
+        if (list != null) {
+            for (item in list) {
+                fruitList.add(item)
+            }
+            fruitsAdapter.notifyDataSetChanged()
+        }
     }
 }
