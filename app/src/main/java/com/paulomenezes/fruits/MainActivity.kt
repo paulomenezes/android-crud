@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity() {
 
     private val fruitsAdapter = FruitsAdapter(this, fruitList) { index ->
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(ADD_FRUIT_EXTRA_NAME, fruitList[index])
-        intent.putExtra(DETAIL_FRUIT_EXTRA_NAME, index)
+        if (index >= 0 && index <= fruitList.lastIndex) {
+            intent.putExtra(ADD_FRUIT_EXTRA_NAME, fruitList[index])
+            intent.putExtra(DETAIL_FRUIT_EXTRA_NAME, index)
 
-        startActivityForResult(intent, DETAIL_FRUIT_REQUEST_CODE)
+            startActivityForResult(intent, DETAIL_FRUIT_REQUEST_CODE)
+        }
     }
-
-    private var layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,20 +40,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.recyclerView.adapter = fruitsAdapter
-        binding.recyclerView.layoutManager = layoutManager
-
-//        if (savedInstanceState != null) {
-//            val list = savedInstanceState.getParcelableArrayList<Fruit>(SAVED_INSTANCE_EXTRA_ID)
-//
-//            if (list != null) {
-//                fruitList = list
-//                fruitsAdapter.notifyDataSetChanged()
-//            }
-//        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         binding.addButton.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
-            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
             startActivityForResult(intent, ADD_FRUIT_REQUEST_CODE)
         }
@@ -79,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 if (index >= 0) {
                     fruitList.removeAt(index)
 
-                    fruitsAdapter.notifyItemRemoved(index)
+                    fruitsAdapter.notifyDataSetChanged()
 
                     Toast.makeText(this, R.string.message_delete, Toast.LENGTH_SHORT).show()
                 }
@@ -98,9 +88,7 @@ class MainActivity : AppCompatActivity() {
         val list = savedInstanceState.getParcelableArrayList<Fruit>(SAVED_INSTANCE_EXTRA_ID)
 
         if (list != null) {
-            for (item in list) {
-                fruitList.add(item)
-            }
+            fruitList.addAll(list)
             fruitsAdapter.notifyDataSetChanged()
         }
     }

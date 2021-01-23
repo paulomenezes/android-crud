@@ -22,7 +22,7 @@ class DetailActivity: AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val fruit = intent.getParcelableExtra<Fruit>(MainActivity.ADD_FRUIT_EXTRA_NAME)
-        val index = intent.getIntExtra(MainActivity.DETAIL_FRUIT_EXTRA_NAME, 0)
+        val index = intent.getIntExtra(MainActivity.DETAIL_FRUIT_EXTRA_NAME, -1)
 
         if (fruit != null) {
             binding.imageView3.setImageBitmap(fruit.image)

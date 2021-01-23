@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.paulomenezes.fruits.DetailActivity
 import com.paulomenezes.fruits.MainActivity
+import com.paulomenezes.fruits.R
 import com.paulomenezes.fruits.databinding.ListItemFruitBinding
 import com.paulomenezes.fruits.models.Fruit
 import com.paulomenezes.fruits.utils.toDP
@@ -27,7 +28,8 @@ class FruitsAdapter (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListItemFruitBinding.inflate(LayoutInflater.from(parent.context))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_fruit, parent, false)
+        val binding = ListItemFruitBinding.bind(view)
         return ViewHolder(binding)
     }
 

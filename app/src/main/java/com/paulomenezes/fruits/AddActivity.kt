@@ -56,7 +56,6 @@ class AddActivity : AppCompatActivity() {
 
                 val intent = Intent()
                 intent.putExtra(MainActivity.ADD_FRUIT_EXTRA_NAME, fruit)
-                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 
                 setResult(RESULT_OK, intent)
                 finish()

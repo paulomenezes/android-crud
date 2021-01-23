@@ -63,6 +63,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:text="testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando testando aaa testando testando testando testando testando testando testando testando testando testando "
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
