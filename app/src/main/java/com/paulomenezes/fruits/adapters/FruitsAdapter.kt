@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.paulomenezes.fruits.DetailActivity
@@ -19,7 +21,13 @@ class FruitsAdapter (
         private val context: Context,
         private val list: MutableList<Fruit>,
         private val onItemClick: (Int) -> Unit
-    ) : RecyclerView.Adapter<FruitsAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<FruitsAdapter.ViewHolder>(), Filterable {
+
+    val originalList: MutableList<Fruit> = mutableListOf()
+
+    init {
+        originalList.addAll(list)
+    }
 
     class ViewHolder(itemView: ListItemFruitBinding) : RecyclerView.ViewHolder(itemView.root) {
         val imageView = itemView.imageView
@@ -34,7 +42,7 @@ class FruitsAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textName.text = list[position].name
+        holder.textName.text = "${list[position].id} - ${list[position].name}"
         holder.textBenefit.text = list[position].benefits
         holder.imageView.setImageBitmap(list[position].image)
 
@@ -53,5 +61,34 @@ class FruitsAdapter (
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    fun add(estado: Fruit) {
+        originalList.add(estado)
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
+                list.clear()
+                list.addAll(results.values as List<Fruit>)
+                notifyDataSetChanged()
+            }
+
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val filteredResults: List<Fruit> = if (constraint.isEmpty()) {
+                    originalList
+                } else {
+                    getFilteredResults()
+                }
+                val results = FilterResults()
+                results.values = filteredResults
+                return results
+            }
+
+            private fun getFilteredResults(): List<Fruit> {
+                return originalList.distinctBy { it.name }
+            }
+        }
     }
 }

@@ -18,13 +18,15 @@ class DetailActivity: AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-
+        setSupportActionBar(binding.detailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val fruit = intent.getParcelableExtra<Fruit>(MainActivity.ADD_FRUIT_EXTRA_NAME)
         val index = intent.getIntExtra(MainActivity.DETAIL_FRUIT_EXTRA_NAME, -1)
 
         if (fruit != null) {
+            supportActionBar?.title = fruit.name
+
             binding.imageView3.setImageBitmap(fruit.image)
             binding.textDetailName.text = fruit.name
             binding.textDetailBenefit.text = fruit.benefits
@@ -42,20 +44,5 @@ class DetailActivity: AppCompatActivity() {
 
             finish()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                return true
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return true
     }
 }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Cadastro de Frutas</string>
-    <string name="title_activity_add">Adicionar</string>
+    <string name="title_activity_add">Adicionar Fruta</string>
     <string name="title_activity_detail">Detalhes</string>
     <!--
     This string is used for square devices and overridden by hello_world in
@@ -20,4 +20,10 @@
 
     <string name="message_add">Fruta adicionada com sucesso</string>
     <string name="message_delete">Fruta removida com sucesso</string>
+    <string name="main_title">Lista de Frutas</string>
+
+    <string name="main_filter">Filtro</string>
+    <string name="show_duplicates">Mostrar duplicados</string>
+    <string name="sort_insert">Ordem: Inserção</string>
+    <string name="sort_letter">Ordem: Alfabética</string>
 </resources>

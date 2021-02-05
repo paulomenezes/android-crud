@@ -31,6 +31,7 @@ class AddActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        setSupportActionBar(binding.addToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.buttonAddImage.setOnClickListener {
@@ -49,10 +50,13 @@ class AddActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.error_required_photo, Toast.LENGTH_LONG).show()
             } else {
                 val fruit = Fruit(
+                        Fruit.idSequence,
                         binding.inputName.text.toString(),
                         binding.inputBenefits.text.toString(),
                         imageData
                 )
+
+                Fruit.idSequence++
 
                 val intent = Intent()
                 intent.putExtra(MainActivity.ADD_FRUIT_EXTRA_NAME, fruit)
@@ -70,10 +74,14 @@ class AddActivity : AppCompatActivity() {
             try {
                 val imageUri: Uri? = data.data
                 val imageStream: InputStream? = contentResolver.openInputStream(imageUri!!)
-                val selectedImage = BitmapFactory.decodeStream(imageStream)
-                binding.imageView2.setImageBitmap(selectedImage)
+                val bitmapImage = BitmapFactory.decodeStream(imageStream)
 
-                imageData = selectedImage
+                val nh = (bitmapImage.height * (128.0 / bitmapImage.width)).toInt()
+                val scaled = Bitmap.createScaledBitmap(bitmapImage, 128, nh, true)
+
+                binding.imageView2.setImageBitmap(scaled)
+
+                imageData = scaled
             } catch (e: FileNotFoundException) {
                 Toast.makeText(this, R.string.load_image_error, Toast.LENGTH_LONG).show()
             }
